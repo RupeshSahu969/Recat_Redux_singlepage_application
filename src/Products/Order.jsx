@@ -1,3 +1,4 @@
+import { Box, Image } from '@chakra-ui/react';
 import React from 'react'
 
 import { useSelector } from 'react-redux';
@@ -6,7 +7,7 @@ export const Order = () => {
     const { orderData } = useSelector((store) => store.order);
     // console.log(orderData);
   return (
-    <div
+    <Box
     style={{
       display: "grid",
       gridTemplateColumns: "repeat(4,1fr)",
@@ -14,15 +15,15 @@ export const Order = () => {
     }}
   >
     {orderData.map((el) => (
-      <div key={el.id}>
-        <img src={el.image} alt="img" />
+      <Box key={el.id} >
+        <Image src={el.image} alt="img" w="90%" />
         <h3>{el.brand}</h3>
         <p>{el.title}</p>
         <h5>{el.category}</h5>
         <h5>{el.price}</h5>
-      </div>
+      </Box>
     ))}
-  </div>
+  </Box>
   )
 }
 

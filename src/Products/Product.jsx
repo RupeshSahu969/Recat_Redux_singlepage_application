@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../Redux/Products/Product.action";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Box, Button, Flex, Image, Select, SimpleGrid } from "@chakra-ui/react";
 export const Product = () => {
 
   const [category, setCategory] = useState("");
@@ -31,41 +32,39 @@ export const Product = () => {
   };
   return (
     <>
-      <select onChange={handleCategory}>
+    <Flex w="50%" m="10px">
+    <Select onChange={handleCategory}>
         <option value="">Select By Category</option>
         <option value="kids">kids</option>
         <option value="women">women</option>
         <option value="homedecor">homedecor</option>
-      </select>
-      <select onChange={handleOrder}>
+      </Select>
+      <Select onChange={handleOrder}>
         <option value="">Order By</option>
         <option value="asc">ASC</option>
         <option value="desc">DESC</option>
-      </select>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4,1fr)",
-          marginTop: "20px",
-        }}
-      >
+      </Select>
+    </Flex>
+      
+    <SimpleGrid columns={[1,2,3, 4]} spacing='40px' mt="30px" mb="30px">
+      
         {data.map((el) => (
           <Link to={`/${el.id}`}> 
-            <div key={el.id}>
-              <img src={el.image} alt="img" />
+            <Box key={el.id}  boxShadow={"rgba(149, 157, 165, 0.2) 0px 8px 24px"}>
+              <Image src={el.image} alt="img" w="100% "/>
               <h3>{el.brand}</h3>
               <p>{el.title}</p>
               <h5>{el.category}</h5>
               <h5>{el.price}</h5>
-            </div>
+            </Box>
           </Link>
         ))}
-      </div>
-      <button disabled={page==1} onClick={() => handlePage(page - 1)}>Prev</button>
+      </SimpleGrid>
+      <Button disabled={page==1} onClick={() => handlePage(page - 1)}>Prev</Button>
       {array.map((el, i) => (
-        <button onClick={() => handlePage(i + 1)}>{i + 1}</button>
+        <Button onClick={() => handlePage(i + 1)} color={"black"} spacing="5">{i + 1}</Button>
       ))}
-      <button disabled={page==totalPages}  onClick={() => handlePage(page + 1)}>Next</button>
+      <Button disabled={page==totalPages}  onClick={() => handlePage(page + 1)}>Next</Button>
    
     </>
   );

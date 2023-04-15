@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PlaceOrder } from "../Redux/Order/Order.action";
 import { decrement, increament } from "../Redux/Cart/Cart.action";
+import { Heading,Box, Image, Button } from "@chakra-ui/react";
 
 export const Cart = () => {
   const { cartData } = useSelector((store) => store.cart);
@@ -10,6 +11,7 @@ export const Cart = () => {
   const dispatch = useDispatch();
   const handleClick = (data) => {
     dispatch(PlaceOrder(data));
+    alert("Placed Order")
   };
   const handleIncrement = (data) => {
     dispatch(increament(data));
@@ -23,33 +25,34 @@ cartData.forEach((el)=>{
 })
   return (
     <>
-    <h1>Total Price = {total}</h1>
-    <div
+    <Heading>Total Price = {total}</Heading>
+    <Box
       style={{
         display: "grid",
         gridTemplateColumns: "repeat(4,1fr)",
+        gap:"20px",
         marginTop: "20px",
       }}
     >
       {cartData.map((el) => (
-        <div key={el.id}>
-          <img src={el.image} alt="img" />
+        <Box key={el.id}  boxShadow={"rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px"}  p="5px">
+          <Image src={el.image} alt="img" w="100%" />
           <h3>{el.brand}</h3>
           <p>{el.title}</p>
           <h5>{el.category}</h5>
           <h5>{el.price}</h5>
-          <button
+          <Button
             disabled={el.count == 1}
             onClick={() => handleDecrement(el.id)}
           >
             -
-          </button>
+          </Button>
           <span>{el.count}</span>
-          <button onClick={() => handleIncrement(el.id)}>+</button>
-          <button onClick={() => handleClick(el)}>Place Order</button>
-        </div>
+          <Button onClick={() => handleIncrement(el.id)}>+</Button>
+          <Button onClick={() => handleClick(el)}>Place Order</Button>
+        </Box>
       ))}
-    </div>
+    </Box>
     </>
   );
 };
